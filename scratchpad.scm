@@ -71,3 +71,17 @@
 
 ; (insertL `spicy `food (list `give `me `some `food))
 ;Value: (give me some spicy food)
+
+
+; replace the first instance of old in the lat with new
+(define substr
+  (lambda (new old lat)
+    (cond
+      ((null? lat) (quote ()))
+      (else (cond
+              ((eq? (car lat) old) (cons new (cdr lat)))
+              (else (cons (car lat)
+                          (substr new old (cdr lat)))))))))
+
+(substr `kind `mean (list `you `should `be `mean `to `people))
+;Value: (you should be kind to people)
