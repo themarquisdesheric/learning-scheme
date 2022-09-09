@@ -74,14 +74,30 @@
 
 
 ; replace the first instance of old in the lat with new
-(define substr
+(define subst
   (lambda (new old lat)
     (cond
       ((null? lat) (quote ()))
       (else (cond
               ((eq? (car lat) old) (cons new (cdr lat)))
               (else (cons (car lat)
-                          (substr new old (cdr lat)))))))))
+                          (subst new old (cdr lat)))))))))
 
-(substr `kind `mean (list `you `should `be `mean `to `people))
+; (subst `kind `mean (list `you `should `be `mean `to `people))
 ;Value: (you should be kind to people)
+
+
+; replace either the first occurrence of o1 or the first occurrence of o2 with new
+(define subst2
+  (lambda (new o1 o2 lat)
+    (cond
+      ((null? lat) (quote ()))
+      (else (cond
+              ((eq? (car lat) o1) (cons new (cdr lat)))
+              ((eq? (car lat) o2) (cons new (cdr lat)))
+              (else (cons (car lat)
+                          (subst2 new o1 o2 (cdr lat)))))))))
+
+(subst2 `vanilla `chocolate `banana
+  (list `banana `ice `cream `with `chocolate `topping))
+; Value: (vanilla ice cream with chocolate topping)
