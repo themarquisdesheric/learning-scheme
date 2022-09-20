@@ -101,3 +101,28 @@
 (subst2 `vanilla `chocolate `banana
   (list `banana `ice `cream `with `chocolate `topping))
 ; Value: (vanilla ice cream with chocolate topping)
+
+; write a function that adds 1
+(define add1
+  (lambda (n)
+    (+ n 1)))
+
+; (add1 5)
+;Value: 6
+
+;write a function that subtracts 1
+(define sub1
+  (lambda (n)
+    (- n 1)))
+
+; (sub1 5)
+;Value: 4
+
+; write the function sum which adds two non-negative integers
+(define sum
+  (lambda (a b)
+    (cond
+      ((zero? b) a)
+      (else (add1 (sum a (sub1 b)))))))
+
+(sum 46 12)
