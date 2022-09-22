@@ -125,4 +125,25 @@
       ((zero? b) a)
       (else (add1 (sum a (sub1 b)))))))
 
-(sum 46 12)
+; (sum 46 12)
+;Value: 58
+
+; write the function subtract which subtracts two non-negative integers
+(define subtract
+  (lambda (a b)
+    (cond
+      ((zero? b) a)
+      (else (sub1 (subtract a (sub1 b)))))))
+
+; (subtract 14 3)
+;Value: 11
+
+; write the function addtup which sums a tup
+(define addtup
+  (lambda (tup)
+    (cond
+      ((null? tup) 0)
+      (else (sum (car tup) (addtup (cdr tup)))))))
+
+(addtup (list 1 2 3 4 5))
+;Value: 15
