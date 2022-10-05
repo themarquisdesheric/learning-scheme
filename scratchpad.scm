@@ -164,10 +164,32 @@
   (lambda (tup1 tup2)
     (cond
       ((and (null? tup1) (null? tup2))
-        (quote ()))
+       (quote ()))
       (else (cons (sum (car tup1) (car tup2))
                     (tup+ (cdr tup1) (cdr tup2)))))))
 
-(tup+ (list 3 6 9 11 4)
-      (list 8 5 2 0 7))
+; (tup+ (list 3 6 9 11 4)
+;       (list 8 5 2 0 7))
 ;Value: (11 11 11 11 11)
+
+; write a greater than function
+(define >
+  (lambda (n m)
+    (cond
+      ((zero? n) #f)
+      ((zero? m) #t)
+      (else (> (sub1 n) (sub1 m))))))
+
+; (> 5 3)
+;Value: #t
+
+; write a less than function
+(define <
+  (lambda (n m)
+    (cond
+      ((zero? m) #f)
+      ((zero? n) #t)
+      (else (< (sub1 n) (sub1 m))))))
+
+; (< 5 3)
+;Value: #f
