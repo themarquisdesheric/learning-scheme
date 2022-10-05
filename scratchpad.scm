@@ -147,3 +147,27 @@
 
 (addtup (list 1 2 3 4 5))
 ;Value: 15
+
+; write the function multiply which multiplies two integers
+(define multiply
+  (lambda (n m)
+    (cond
+      ((zero? m) 0)
+      (else (sum n (multiply n (sub1 m)))))))
+
+; (multiply 12 3)
+;Value: 36
+
+; write the function tup+ which takes two tups as input and outputs a tup with the sum of the first elements
+; of each tup, followed by the sum of second elements of each tup, ...
+(define tup+
+  (lambda (tup1 tup2)
+    (cond
+      ((and (null? tup1) (null? tup2))
+        (quote ()))
+      (else (cons (sum (car tup1) (car tup2))
+                    (tup+ (cdr tup1) (cdr tup2)))))))
+
+(tup+ (list 3 6 9 11 4)
+      (list 8 5 2 0 7))
+;Value: (11 11 11 11 11)
