@@ -193,3 +193,23 @@
 
 ; (< 5 3)
 ;Value: #f
+
+; write the function =
+(define =
+  (lambda (n m)
+    (cond
+      ((> n m) #f)
+      ((< n m) #f)
+      (else #t))))
+
+; (= 4 4)
+;Value: #t
+
+(define powerof
+  (lambda (n m)
+    (cond
+      ((zero? m) 1)
+      (else (multiply n (powerof n (sub1 m)))))))
+
+(powerof 5 3)
+;Value: 125
