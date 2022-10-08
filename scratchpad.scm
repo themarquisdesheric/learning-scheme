@@ -7,7 +7,7 @@
      (else (cons (car lat)
              (removeMember a (cdr lat)))))))
 
-; (removeMember `sauce (list `soy `sauce `and `other `sauce))
+(removeMember `sauce (list `soy `sauce `and `other `sauce))
 ;Value: (soy and other sauce)
 
 
@@ -20,7 +20,7 @@
       (else (cons (car lat)
                   (removeAllMembers a (cdr lat)))))))
 
-; (removeAllMembers `sauce (list `soy `sauce `and `other `sauce))
+(removeAllMembers `sauce (list `soy `sauce `and `other `sauce))
 ;Value: (soy and other)
 
 
@@ -32,14 +32,14 @@
       (else (cons (car (car l))
                   (firsts (cdr l)))))))
 
-; (firsts (list (list `a `b `c)
-;               (list `d `e `f)
-;               (list `g `h `i)))
+(firsts (list (list `a `b `c)
+              (list `d `e `f)
+              (list `g `h `i)))
 ;Value: (a d g)
 
-; (firsts (list (list `a `b `c)
-;               (list (list `nested `list))
-;               (list `d `e `f)))
+(firsts (list (list `a `b `c)
+              (list (list `nested `list))
+              (list `d `e `f)))
 ;Value: (a (nested list) d)
 
 
@@ -55,7 +55,7 @@
               (else (cons (car lat)
                           (insertR new old (cdr lat)))))))))
 
-; (insertR `practice `more (list `give `me `some `more `please))
+(insertR `practice `more (list `give `me `some `more `please))
 ;Value: (give me some more practice please)
 
 
@@ -69,7 +69,7 @@
               (else (cons (car lat)
                           (insertL new old (cdr lat)))))))))
 
-; (insertL `spicy `food (list `give `me `some `food))
+(insertL `spicy `food (list `give `me `some `food))
 ;Value: (give me some spicy food)
 
 
@@ -83,7 +83,7 @@
               (else (cons (car lat)
                           (subst new old (cdr lat)))))))))
 
-; (subst `kind `mean (list `you `should `be `mean `to `people))
+(subst `kind `mean (list `you `should `be `mean `to `people))
 ;Value: (you should be kind to people)
 
 
@@ -107,7 +107,7 @@
   (lambda (n)
     (+ n 1)))
 
-; (add1 5)
+(add1 5)
 ;Value: 6
 
 ;write a function that subtracts 1
@@ -115,27 +115,27 @@
   (lambda (n)
     (- n 1)))
 
-; (sub1 5)
+(sub1 5)
 ;Value: 4
 
 ; write the function sum which adds two non-negative integers
 (define sum
-  (lambda (a b)
+  (lambda (n m)
     (cond
-      ((zero? b) a)
-      (else (add1 (sum a (sub1 b)))))))
+      ((zero? m) n)
+      (else (add1 (sum n (sub1 m)))))))
 
-; (sum 46 12)
+(sum 46 12)
 ;Value: 58
 
 ; write the function subtract which subtracts two non-negative integers
 (define subtract
-  (lambda (a b)
+  (lambda (n m)
     (cond
-      ((zero? b) a)
-      (else (sub1 (subtract a (sub1 b)))))))
+      ((zero? m) n)
+      (else (sub1 (subtract n (sub1 m)))))))
 
-; (subtract 14 3)
+(subtract 14 3)
 ;Value: 11
 
 ; write the function addtup which sums a tup
@@ -155,7 +155,7 @@
       ((zero? m) 0)
       (else (sum n (multiply n (sub1 m)))))))
 
-; (multiply 12 3)
+(multiply 12 3)
 ;Value: 36
 
 ; write the function tup+ which takes two tups as input and outputs a tup with the sum of the first elements
@@ -168,8 +168,8 @@
       (else (cons (sum (car tup1) (car tup2))
                     (tup+ (cdr tup1) (cdr tup2)))))))
 
-; (tup+ (list 3 6 9 11 4)
-;       (list 8 5 2 0 7))
+(tup+ (list 3 6 9 11 4)
+      (list 8 5 2 0 7))
 ;Value: (11 11 11 11 11)
 
 ; write a greater than function
@@ -180,7 +180,7 @@
       ((zero? m) #t)
       (else (> (sub1 n) (sub1 m))))))
 
-; (> 5 3)
+(> 5 3)
 ;Value: #t
 
 ; write a less than function
@@ -191,7 +191,7 @@
       ((zero? n) #t)
       (else (< (sub1 n) (sub1 m))))))
 
-; (< 5 3)
+(< 5 3)
 ;Value: #f
 
 ; write the function =
@@ -202,7 +202,7 @@
       ((< n m) #f)
       (else #t))))
 
-; (= 4 4)
+(= 4 4)
 ;Value: #t
 
 (define powerof
@@ -213,3 +213,29 @@
 
 (powerof 5 3)
 ;Value: 125
+
+; what is a good name for this function? exercise
+(define ???
+  (lambda (n m)
+    (cond
+      ((< n m) 0)
+      (else (add1 (??? (- n m) m))))))
+
+; answer: division (no remainder)
+(??? 6 3)
+;Value: 2
+
+; (??? 6 3) = 1 + (??? 3 3)
+;           = 1 + 1 + (??? 0 3)
+;           = 1 + 1 + 0
+;Value: 2
+
+; (??? 6 2) = 1 + (??? 4 2)
+;           = 1 + 1 + (??? 2 2)
+;           = 1 + 1 + 1 + (??? 0 2)
+;           = 1 + 1 + 1 + 0
+;Value: 3
+
+; (??? 6 4) = 1 + (??? 2 4)
+;           = 1 + 0
+;Value: 1
