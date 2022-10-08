@@ -1,4 +1,4 @@
-; remove first instance of member from list of atoms
+; remove first instance of member `a` from list of atoms
 (define removeMember
   (lambda (a lat)
     (cond
@@ -11,7 +11,7 @@
 ;Value: (soy and other sauce)
 
 
-; remove all instances of member from list of atoms
+; remove all instances of member `a` from list of atoms
 (define removeAllMembers
   (lambda (a lat)
     (cond
@@ -43,7 +43,7 @@
 ;Value: (a (nested list) d)
 
 
-; given the parameters (new old lat) return a list of atoms with new inserted to the right of the first occurrence of old, followed by the rest of the list
+; given the parameters `(new old lat)` return a list of atoms with `new` inserted to the right of the first occurrence of `old`, followed by the rest of the list
 (define insertR
   (lambda (new old lat)
     (cond
@@ -59,7 +59,7 @@
 ;Value: (give me some more practice please)
 
 
-; given the parameters (new old lat) return a list of atoms with new inserted to the left of the first occurrence of old, followed by the rest of the list
+; given the parameters `(new old lat)` return a list of atoms with `new` inserted to the left of the first occurrence of `old`, followed by the rest of the list
 (define insertL
   (lambda (new old lat)
     (cond
@@ -73,7 +73,7 @@
 ;Value: (give me some spicy food)
 
 
-; replace the first instance of old in the lat with new
+; replace the first instance of `old` in the `lat` with `new`
 (define subst
   (lambda (new old lat)
     (cond
@@ -87,7 +87,7 @@
 ;Value: (you should be kind to people)
 
 
-; replace either the first occurrence of o1 or the first occurrence of o2 with new
+; replace either the first occurrence of `o1` or the first occurrence of `o2` with `new`
 (define subst2
   (lambda (new o1 o2 lat)
     (cond
@@ -102,7 +102,7 @@
   (list `banana `ice `cream `with `chocolate `topping))
 ; Value: (vanilla ice cream with chocolate topping)
 
-; write a function that adds 1
+; write the function `add1` that adds 1 to an integer
 (define add1
   (lambda (n)
     (+ n 1)))
@@ -110,7 +110,7 @@
 (add1 5)
 ;Value: 6
 
-;write a function that subtracts 1
+;write the function `sub1` which subtracts 1 from an integer
 (define sub1
   (lambda (n)
     (- n 1)))
@@ -118,7 +118,7 @@
 (sub1 5)
 ;Value: 4
 
-; write the function sum which adds two non-negative integers
+; write the function `sum` which adds two non-negative integers
 (define sum
   (lambda (n m)
     (cond
@@ -128,7 +128,7 @@
 (sum 46 12)
 ;Value: 58
 
-; write the function subtract which subtracts two non-negative integers
+; write the function `subtract` which subtracts two non-negative integers
 (define subtract
   (lambda (n m)
     (cond
@@ -138,7 +138,7 @@
 (subtract 14 3)
 ;Value: 11
 
-; write the function addtup which sums a tup
+; write the function `addtup` which sums a tup
 (define addtup
   (lambda (tup)
     (cond
@@ -148,7 +148,7 @@
 (addtup (list 1 2 3 4 5))
 ;Value: 15
 
-; write the function multiply which multiplies two integers
+; write the function `multiply` which multiplies two integers
 (define multiply
   (lambda (n m)
     (cond
@@ -158,8 +158,8 @@
 (multiply 12 3)
 ;Value: 36
 
-; write the function tup+ which takes two tups as input and outputs a tup with the sum of the first elements
-; of each tup, followed by the sum of second elements of each tup, ...
+; write the function `tup+` which takes two tups as input and outputs a tup with the sum of the first elements
+; of each tup, followed by the sum of the second elements of each tup, ...
 (define tup+
   (lambda (tup1 tup2)
     (cond
@@ -172,7 +172,7 @@
       (list 8 5 2 0 7))
 ;Value: (11 11 11 11 11)
 
-; write a greater than function
+; write the function `>` (greater than)
 (define >
   (lambda (n m)
     (cond
@@ -183,7 +183,7 @@
 (> 5 3)
 ;Value: #t
 
-; write a less than function
+; write the function `<` (less than)
 (define <
   (lambda (n m)
     (cond
@@ -194,7 +194,7 @@
 (< 5 3)
 ;Value: #f
 
-; write the function =
+; write the function `=` (equals)
 (define =
   (lambda (n m)
     (cond
@@ -205,6 +205,7 @@
 (= 4 4)
 ;Value: #t
 
+; write the function `powerof` (exponent)
 (define powerof
   (lambda (n m)
     (cond
@@ -214,14 +215,15 @@
 (powerof 5 3)
 ;Value: 125
 
-; what is a good name for this function? exercise
+; what is a good name for this function?
 (define ???
   (lambda (n m)
     (cond
       ((< n m) 0)
       (else (add1 (??? (- n m) m))))))
 
-; answer: division (no remainder)
+; answer: division (no remainder though)
+
 (??? 6 3)
 ;Value: 2
 
