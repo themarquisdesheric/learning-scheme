@@ -5,7 +5,7 @@
      ((null? lat) (quote ()))
      ((eq? (car lat) a) (cdr lat))
      (else (cons (car lat)
-             (removeMember a (cdr lat)))))))
+                 (removeMember a (cdr lat)))))))
 
 (removeMember `sauce (list `soy `sauce `and `other `sauce))
 ;Value: (soy and other sauce)
@@ -166,7 +166,7 @@
       ((and (null? tup1) (null? tup2))
        (quote ()))
       (else (cons (sum (car tup1) (car tup2))
-                    (tup+ (cdr tup1) (cdr tup2)))))))
+                  (tup+ (cdr tup1) (cdr tup2)))))))
 
 (tup+ (list 3 6 9 11 4)
       (list 8 5 2 0 7))
@@ -241,3 +241,34 @@
 ; (??? 6 4) = 1 + (??? 2 4)
 ;           = 1 + 0
 ;Value: 1
+
+; write the function `length` which takes a `lat` and returns the count of its S-expressions
+(define length
+  (lambda (lat)
+    (cond
+      ((null? lat) 0)
+      (else (add1 (length (cdr lat)))))))
+
+(length (list `here `are `four `words))
+;Value: 4
+
+; write the function `pick` which takes two arguments, `n` and `lat`, and returns the S-expression at index `n` (indexes are 1-based in Scheme)
+(define pick
+  (lambda (n lat)
+    (cond
+      ((zero? (sub1 n)) (car lat))
+      (else (pick (sub1 n) (cdr lat))))))
+
+(pick 3 (list `retrieve `the `third `item `and `remember `it's `1-based))
+;Value: third
+
+; write the function `rempick` which returns a list of S-expressions, omitting the one at index `n`
+(define rempick
+  (lambda (n lat)
+    (cond
+      ((zero? (sub1 n)) (cdr lat))
+      (else (cons (car lat)
+                  (rempick (sub1 n) (cdr lat)))))))
+
+(rempick 3 (list `fix `this `broken `sentence))
+;Value: (fix this sentence)
