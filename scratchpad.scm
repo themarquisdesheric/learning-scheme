@@ -272,3 +272,30 @@
 
 (rempick 3 (list `fix `this `broken `sentence))
 ;Value: (fix this sentence)
+
+; write the function `no-nums` which removes numbers from a list of atoms
+(define no-nums
+  (lambda (lat)
+    (cond
+      ((null? lat) (quote ()))
+      (else 
+        (cond
+          ((number? (car lat)) (no-nums (cdr lat)))
+          (else (cons (car lat)
+                      (no-nums (cdr lat)))))))))
+
+(no-nums (list 1 `hey 2 `hello 3 `hi))
+;Value: (hey hello hi)
+
+; write the function `all-nums` which extracts a tup from its input `lat`
+(define all-nums
+  (lambda (lat)
+    (cond
+      ((null? lat) (quote ()))
+      (else (cond
+              ((number? (car lat))
+               (cons (car lat) (all-nums (cdr lat))))
+              (else (all-nums (cdr lat))))))))
+
+(all-nums (list 1 `hey 2 `hello 3 `hi))
+;Value: (1 2 3)
