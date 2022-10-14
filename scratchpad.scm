@@ -299,3 +299,50 @@
 
 (all-nums (list 1 `hey 2 `hello 3 `hi))
 ;Value: (1 2 3)
+
+; write the function `eqan?` which returns true if both its arguments `a1` and `a2` are the same atom
+(define eqan?
+  (lambda (a1 a2)
+    (cond
+      ((and (number? a1) (number? a2))
+        (= a1 a2))
+      ((or (number? a1) (number? a2))
+        #f)
+      (else (eq? a1 a2)))))
+
+(eqan? `hey `hey)
+
+; write the function `occur` which counts the number of times an atom `a` appears in a `lat`
+(define occur
+  (lambda (a lat)
+    (cond
+      ((null? lat) 0)
+      (else
+        (cond
+          ((eq? (car lat) a) 
+            (add1 (occur a (cdr lat))))
+          (else (occur a (cdr lat))))))))
+
+(occur `tyger (list `tyger `tyger `burning `bright))
+;Value: 2
+
+; write the function `one?` which returns true if `n` is 1 and false otherwise
+(define one?
+  (lambda (n)
+    (cond
+      ((and (number? n) (= 1 n))
+        #t)
+      (else #f))))
+
+(one? 1)
+;Value: #t
+
+; rewrite the function `rempick` which removes the nth atom from a lat. Use the function `one?` in your answer
+(define removepick
+  (lambda (n lat)
+    (cond
+      ((one? n) (cdr lat))
+      (else (cons (car lat)
+                  (removepick (sub1 n) (cdr lat)))))))
+
+(rempick 3 (list `fix `this `broken `sentence))
