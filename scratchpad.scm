@@ -346,3 +346,47 @@
                   (removepick (sub1 n) (cdr lat)))))))
 
 (rempick 3 (list `fix `this `broken `sentence))
+
+; `atom?` is a primitive defined in the book, necessary for subsequent exercises
+(define atom?
+  (lambda (x)
+    (and (not (pair? x)) (not (null? x)))))
+
+(atom? `an_atom)
+;Value: #t
+
+; `lat?` is a primitive defined in the book, necessary for subsequent exercises
+(define lat?
+  (lambda (l)
+    (cond
+      ((null? l) #t)
+      ((atom? (car l)) (lat? (cdr l)))
+      (else #f))))
+
+(lat? (list `a `list `of `atoms))
+;Value: #t
+
+; write the function `rember*` which removes occurences of `a` regardless of where it appears (in nested lists, etc)
+(define rember*
+  (lambda (a l)
+    (cond
+      ((null? l) (quote ()))
+      ((atom? (car l)) (cond
+                         ((eq? (car l) a) (rember* a (cdr l)))
+                         (else (cons (car l)
+                                     (rember* a (cdr l))))))
+      (else (cons (rember* a (car l))
+                  (rember* a (cdr l)))))))
+
+;             ((coffee) cup ((tea) cup) (and (hick)) cup)
+(rember* `cup (list
+                (list `coffee)
+                `cup
+                (list
+                  (list `tea)
+                  `cup)
+                (list
+                  `and
+                  (list `hick))
+                `cup))
+;Value: ((coffee) ((tea)) (and (hick)))
