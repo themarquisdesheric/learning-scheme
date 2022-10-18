@@ -390,3 +390,27 @@
                   (list `hick))
                 `cup))
 ;Value: ((coffee) ((tea)) (and (hick)))
+
+; write the function `insertR*` which inserts the atom `new` to the right of `old` regardless of where `old` occurs
+(define insertR*
+  (lambda (new old l)
+    (cond
+      ((null? l) (quote ()))
+      ((atom? (car l)) (cond
+                         ((eq? (car l) old) (cons (car l)
+                                                  (cons new
+                                                        (insertR* new old (cdr l)))))
+                          (else (cons (car l)
+                                      (insertR* new old (cdr l))))))
+      (else (cons (insertR* new old (car l))
+                  (insertR* new old (cdr l)))))))))
+
+;                          (((good (good)) good (good)))
+(insertR* `prevailed `good (list
+                             (list
+                               (list
+                                 `good
+                                 (list `good))
+                                 `good
+                                 (list `good))))
+;Value: (((good prevailed (good prevailed)) good prevailed (good prevailed)))
