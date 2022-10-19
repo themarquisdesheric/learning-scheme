@@ -403,7 +403,7 @@
                           (else (cons (car l)
                                       (insertR* new old (cdr l))))))
       (else (cons (insertR* new old (car l))
-                  (insertR* new old (cdr l)))))))))
+                  (insertR* new old (cdr l)))))))
 
 ;                          (((good (good)) good (good)))
 (insertR* `prevailed `good (list
@@ -414,3 +414,50 @@
                                  `good
                                  (list `good))))
 ;Value: (((good prevailed (good prevailed)) good prevailed (good prevailed)))
+
+; write the function `occur*` that counts the number of times an atom `a` appears in a list, regardless of where it occurs
+(define occur*
+  (lambda (a l)
+    (cond
+      ((null? l) 0)
+      ((atom? (car l)) (cond
+                         ((eq? (car l) a) (add1 (occur* a (cdr l))))
+                         (else (occur* a (cdr l)))))
+      (else (sum (occur* a (car l))
+                 (occur* a (cdr l)))))))
+
+;               (chocolate banana (another banana) (((banana))))
+(occur* `banana (list `chocolate `banana (list `another `banana) (list (list (list `banana)))))
+;Value: 3
+
+; write the function `subst*` which replaces each instance of `old` with `new`, regardless of where it occurs
+(define subst*
+  (lambda (new old l)
+    (cond
+      ((null? l) (quote ()))
+      ((atom? (car l)) (cond
+                         ((eq? (car l) old)
+                          (cons new (subst* new old (cdr l))))
+                         (else (cons (car l) (subst* new old (cdr l))))))
+      (else (cons (subst* new old (car l))
+                  (subst* new old (cdr l)))))))
+
+;                   (create war (so much ((war))))
+(subst* `peace `war (list `create `war (list `so `much (list (list `war)))))
+;Value: (create peace (so much ((peace))))
+
+; write the function `insertL*` which inserts the atom `new` to the left of `old` regardless of where `old` occurs
+(define insertL*
+  (lambda (new old l)
+    (cond
+      ((null? l) (quote ()))
+      ((atom? (car l)) (cond
+                         ((eq? (car l) old) (cons new
+                                                  (cons (car l)
+                                                        (insertL* new old (cdr l)))))
+                         (else (cons (car l) (insertL* new old (cdr l))))))
+      (else (cons (insertL* new old (car l))
+                  (insertL* new old (cdr l)))))))
+;                      (let us have a party wallace (((a party))))
+(insertL* `drug `party (list `let `us `have `a `party `wallace (list (list (list `a `party)))))
+;Value: (let us have a drug party wallace (((a drug party))))
