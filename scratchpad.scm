@@ -461,3 +461,13 @@
 ;                      (let us have a party wallace (((a party))))
 (insertL* `drug `party (list `let `us `have `a `party `wallace (list (list (list `a `party)))))
 ;Value: (let us have a drug party wallace (((a drug party))))
+
+; write the function `member*` which returns true if an atom is a member of a list and false otherwise
+(define member*
+  (lambda (a l)
+    (cond
+      ((null? l) #f)
+      ((atom? (car l)) (or (eq? (car l) a) (member* a (cdr l))))
+      (else (or (member* a (car l)) (member* a (cdr l)))))))
+
+(member* `hey (list `now (list `you `hey `now)))
