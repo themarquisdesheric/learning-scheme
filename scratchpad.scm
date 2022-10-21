@@ -471,3 +471,12 @@
       (else (or (member* a (car l)) (member* a (cdr l)))))))
 
 (member* `hey (list `now (list `you `hey `now)))
+
+; write the function `leftmost` which returns the leftmost atom in a non-empty list of S-expressions that does not contain the empty list
+(define leftmost
+  (lambda (l)
+    (cond
+      ((atom? (car l)) (car l))
+      (else (leftmost (car l))))))
+
+(leftmost (list (list (list `here)) (list `not `this `or `this)))
