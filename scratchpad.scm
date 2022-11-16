@@ -1,11 +1,11 @@
 ; remove first instance of member `a` from list of atoms
 (define removeMember
-  (lambda (a lat)
+  (lambda (s l)
     (cond
-     ((null? lat) (quote ()))
-     ((eq? (car lat) a) (cdr lat))
-     (else (cons (car lat)
-                 (removeMember a (cdr lat)))))))
+     ((null? l) (quote ()))
+     ((equal? (car l) s) (cdr l))
+     (else (cons (car l)
+                 (removeMember s (cdr l)))))))
 
 (removeMember `sauce (list `soy `sauce `and `other `sauce))
 ;Value: (soy and other sauce)
