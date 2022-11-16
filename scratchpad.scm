@@ -489,13 +489,26 @@
     (cond
       ((and (null? l1) (null? l2)) #t)
       ((or (null? l1) (null? l2)) #f)
-      ((and (atom? (car l1)) (atom? (car l2)))
-        (and (eqan? (car l1) (car l2)) (eqlist? (cdr l1) (cdr l2))))
-      ((or (atom? (car l1)) (atom? (car l2))) #f)
-      (else (and (eqlist? (car l1) (car l2))
+      (else (and (equal? (car l1) (car l2))
                  (eqlist? (cdr l1) (cdr l2)))))))
 
-; (eqlist? (list `hey) (list `hey `hey))
+(eqlist? (list `hey) (list `hey `hey))
 ;Value: #f
 (eqlist? (list (list `hey `now)) (list (list `hey `now)))
 ;Value: #t
+
+; write the function equal which compares two S-expressions
+(define equal?
+  (lambda (s1 s2)
+    (cond
+      ((and (atom? s1) (atom? s2))
+       (eqan? s1 s2))
+      ((or (atom? s1) (atom? s2)) #f)
+      (else (eqlist? s1 s2)))))
+
+(equal? `hey `hey)
+(equal? `hey (list `hey))
+(equal? (quote ()) (quote ()))
+(equal? (list `hey) (list `hey))
+(equal? (list (quote ())) (list (quote ())))
+(equal? (list (quote ()) `hey) (list (quote ())))
