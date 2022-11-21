@@ -205,14 +205,14 @@
 (= 4 4)
 ;Value: #t
 
-; write the function `powerof` (exponent)
-(define powerof
+; write the function `↑` (power of/exponent)
+(define ↑
   (lambda (n m)
     (cond
       ((zero? m) 1)
-      (else (multiply n (powerof n (sub1 m)))))))
+      (else (multiply n (↑ n (sub1 m)))))))
 
-(powerof 5 3)
+(↑ 5 3)
 ;Value: 125
 
 ; what is a good name for this function?
@@ -497,7 +497,7 @@
 (eqlist? (list (list `hey `now)) (list (list `hey `now)))
 ;Value: #t
 
-; write the function equal which compares two S-expressions
+; write the function `equal?` which compares two S-expressions
 (define equal?
   (lambda (s1 s2)
     (cond
@@ -512,3 +512,35 @@
 (equal? (list `hey) (list `hey))
 (equal? (list (quote ())) (list (quote ())))
 (equal? (list (quote ()) `hey) (list (quote ())))
+
+; write the function `numbered?` which determines if a representation of an arithmetic expression contains only numbers aside from the operator working upon those numbers
+(define numbered?
+  (lambda (aexp)
+    (cond
+      ((atom? aexp) (number? aexp))
+      (else (and (numbered? (car aexp))
+                 (numbered? (car (cdr (cdr aexp)))))))))
+
+(numbered? 5)
+(numbered? (list 2 `x 3))
+
+; write the function `value` which returns the natural value of a numbered arithmetic expression
+(define value
+  (lambda (nexp)
+    (cond
+      ((atom? nexp) nexp)
+      ((eq? (car (cdr nexp)) `+)
+       (sum (value (car nexp))
+            (value (car (cdr (cdr nexp))))))
+      ((eq? (car (cdr nexp)) `x)
+       (multiply (value (car nexp))
+                 (value (car (cdr (cdr nexp))))))
+      (else
+        (↑ (value (car nexp))
+           (value (car (cdr (cdr nexp)))))))))
+
+(value 5)
+(value (list 5 `+ 7))
+(value (list 2 `x 5))
+(value (list 3 `↑ 3))
+(value (list 3 `+ (list 3 `+ 3)))
