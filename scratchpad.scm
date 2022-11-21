@@ -525,22 +525,22 @@
 (numbered? (list 2 `x 3))
 
 ; write the function `value` which returns the natural value of a numbered arithmetic expression
+
 (define value
   (lambda (nexp)
     (cond
-      ((atom? nexp) nexp)
-      ((eq? (car (cdr nexp)) `+)
-       (sum (value (car nexp))
+      ((and (atom? nexp) (number? nexp)) nexp)
+      ((eq? (car nexp) `+)
+       (sum (value (car (cdr nexp)))
             (value (car (cdr (cdr nexp))))))
-      ((eq? (car (cdr nexp)) `x)
-       (multiply (value (car nexp))
+      ((eq? (car nexp) `x)
+       (multiply (value (car (cdr nexp)))
                  (value (car (cdr (cdr nexp))))))
-      (else
-        (↑ (value (car nexp))
-           (value (car (cdr (cdr nexp)))))))))
+      (else (↑ (car (cdr nexp))
+               (car (cdr (cdr nexp))))))))
 
 (value 5)
-(value (list 5 `+ 7))
-(value (list 2 `x 5))
-(value (list 3 `↑ 3))
-(value (list 3 `+ (list 3 `+ 3)))
+(value (list `+ 5 7))
+(value (list `x 2 5))
+(value (list `↑ 3 3))
+(value (list `+ 3 (list `+ 3 3)))
