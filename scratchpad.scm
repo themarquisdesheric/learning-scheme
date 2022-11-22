@@ -524,20 +524,31 @@
 (numbered? 5)
 (numbered? (list 2 `x 3))
 
-; write the function `value` which returns the natural value of a numbered arithmetic expression
+(define operator
+  (lambda (aexp)
+    (car aexp)))
 
+(define 1st-sub-exp
+  (lambda (aexp)
+    (car (cdr aexp))))
+
+(define 2nd-sub-exp
+  (lambda (aexp)
+    (car (cdr (cdr aexp)))))
+
+; write the function `value` which returns the natural value of a numbered arithmetic expression
 (define value
   (lambda (nexp)
     (cond
       ((and (atom? nexp) (number? nexp)) nexp)
-      ((eq? (car nexp) `+)
-       (sum (value (car (cdr nexp)))
-            (value (car (cdr (cdr nexp))))))
-      ((eq? (car nexp) `x)
-       (multiply (value (car (cdr nexp)))
-                 (value (car (cdr (cdr nexp))))))
-      (else (↑ (car (cdr nexp))
-               (car (cdr (cdr nexp))))))))
+      ((eq? (operator nexp) `+)
+       (sum (value (1st-sub-exp nexp))
+            (value (2nd-sub-exp nexp))))
+      ((eq? (operator nexp) `x)
+       (multiply (value (1st-sub-exp nexp))
+                 (value (2nd-sub-exp nexp))))
+      (else (↑ (value (1st-sub-exp nexp))
+               (value (2nd-sub-exp nexp)))))))
 
 (value 5)
 (value (list `+ 5 7))
