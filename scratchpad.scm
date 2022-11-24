@@ -506,12 +506,12 @@
       ((or (atom? s1) (atom? s2)) #f)
       (else (eqlist? s1 s2)))))
 
-(equal? `hey `hey)
-(equal? `hey (list `hey))
-(equal? (quote ()) (quote ()))
-(equal? (list `hey) (list `hey))
-(equal? (list (quote ())) (list (quote ())))
-(equal? (list (quote ()) `hey) (list (quote ())))
+(equal? `hey `hey) ;Value: #t
+(equal? `hey (list `hey)) ;Value: #f
+(equal? (quote ()) (quote ())) ;Value: #t
+(equal? (list `hey) (list `hey)) ;Value: #t
+(equal? (list (quote ())) (list (quote ()))) ;Value: #t
+(equal? (list (quote ()) `hey) (list (quote ()))) ;Value: #f
 
 ; write the function `numbered?` which determines if a representation of an arithmetic expression contains only numbers aside from the operator working upon those numbers
 (define numbered?
@@ -521,8 +521,8 @@
       (else (and (numbered? (car aexp))
                  (numbered? (car (cdr (cdr aexp)))))))))
 
-(numbered? 5)
-(numbered? (list 2 `x 3))
+(numbered? 5) ;Value: #t
+(numbered? (list 2 `x 3)) ;Value: #t
 
 (define operator
   (lambda (aexp)
@@ -550,8 +550,44 @@
       (else (↑ (value (1st-sub-exp nexp))
                (value (2nd-sub-exp nexp)))))))
 
-(value 5)
-(value (list `+ 5 7))
-(value (list `x 2 5))
-(value (list `↑ 3 3))
-(value (list `+ 3 (list `+ 3 3)))
+(value 5) ;Value: 5
+(value (list `+ 5 7)) ;Value: 12
+(value (list `x 2 5)) ;Value: 10
+(value (list `↑ 3 3)) ;Value: 27
+(value (list `+ 3 (list `+ 3 3))) ;Value: 9
+
+; write the function `makeset` which creates a unique (de-duped) list from a given list, using `removeAllMembers`
+(define makeset
+  (lambda (lat)
+    (cond
+      ((null? lat) (quote ()))
+      (else (cons (car lat)
+                  (makeset (removeAllMembers (car lat) (cdr lat))))))))
+
+(makeset (list `apple `peach `pear `peach `plum `apple `lemon `peach))
+;Value: (apple peach pear plum lemon)
+
+; write the function `member?` which returns `true` if a `member` exists in a given `lat` and `false` if not
+(define member?
+  (lambda (member lat)
+    (cond
+      ((null? lat) #f)
+      ((equal? member (car lat)) #t)
+      (else (member? member (cdr lat))))))
+
+(member? `this (list `here `is `a `sentence `that `contains `the `word `this)) ;Value: #t
+(member? `this (list `here `is `one `that `does `not)) ;Value: #f
+
+; write the function `subset?` which determines if all members of a list are present in another list (intersection)
+(define subset?
+  (lambda (set1 set2)
+    (cond
+      ((null? set1) #t)
+      ((member? (car set1) set2)
+       (subset? (cdr set1) set2))
+      (else #f))))
+
+(subset? (list `here `are `words)
+         (list `here `are `some `other `words)) ;Value: #t
+(subset? (list `one `of `these `doesn't `exist)
+         (list `in `this `other `list `one `these `doesn't `exist)) ;Value: #f
