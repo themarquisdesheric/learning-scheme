@@ -613,6 +613,59 @@
 
 (eqset? (list `here `are `words)
         (list `here `words `are)) ;Value: #t
-
 (eqset? (list `here `are `some `words)
         (list `here `are `words)) ;Value: #f
+
+; write the function `intersect?` which returns true if at least one member from `set1` exists in `set2`
+(define intersect?
+  (lambda (set1 set2)
+    (cond
+      ((null? set1) #f)
+      ((member? (car set1) set2) #t)
+      (else (intersect? (cdr set1) set2)))))
+
+(intersect? (list `none `of `these `words `appear `below)
+            (list `the `world `has `gone `mad)) ;Value: #f
+(intersect? (list `stewed `tomatoes `and `macaroni)
+            (list `macaroni `and `cheese)) ;Value: #t
+
+; write `intersect?` using `(or...)`
+(define intersectO?
+  (lambda (set1 set2)
+    (cond
+      ((null? set1) #f)
+      (else (or (member? (car set1) set2)
+                (intersectO? (cdr set1) set2))))))
+
+(intersectO? (list `none `of `these `words `appear `below)
+            (list `the `world `has `gone `mad)) ;Value: #f
+(intersectO? (list `stewed `tomatoes `and `macaroni)
+            (list `macaroni `and `cheese)) ;Value: #t
+
+; write the function `intersect` which returns a list of members from `set1` that appear in `set2`
+(define intersect
+  (lambda (set1 set2)
+    (cond
+      ((null? set1) (quote ()))
+      ((member? (car set1) set2)
+       (cons (car set1)
+             (intersect (cdr set1) set2)))
+      (else (intersect (cdr set1) set2)))))
+
+(intersect (list `stewed `tomatoes `and `macaroni)
+           (list `macaroni `and `cheese))
+;Value: (and macaroni)
+
+; write the function `union` which returns a list of members from `set1` that don't appear in `set2`, with `set2` concatenated
+(define union
+  (lambda (set1 set2)
+    (cond
+      ((null? set1) set2)
+      ((member? (car set1) set2)
+       (union (cdr set1) set2))
+      (else (cons (car set1)
+                  (union (cdr set1) set2))))))
+
+(union (list `stewed `tomatoes `and `macaroni `casserole)
+       (list `macaroni `and `cheese))
+;Value: (stewed tomatoes casserole macaroni and cheese)
