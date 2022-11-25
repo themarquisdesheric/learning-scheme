@@ -591,3 +591,28 @@
          (list `here `are `some `other `words)) ;Value: #t
 (subset? (list `one `of `these `doesn't `exist)
          (list `in `this `other `list `one `these `doesn't `exist)) ;Value: #f
+
+; write `subset?` using `(and...)`
+(define subsetA?
+  (lambda (set1 set2)
+    (cond
+      ((null? set1) #t)
+      (else (and (member? (car set1) set2)
+                 (subsetA? (cdr set1) set2))))))
+
+(subsetA? (list `here `are `words)
+         (list `here `are `some `other `words)) ;Value: #t
+(subsetA? (list `one `of `these `doesn't `exist)
+         (list `in `this `other `list `one `these `doesn't `exist)) ;Value: #f
+
+; write the function `eqset?` which returns true if two sets contain exactly the same members, in any order. (complete intersection? not a statistician, obvs)
+(define eqset?
+  (lambda (set1 set2)
+    (and (subset? set1 set2)
+         (subset? set2 set1))))
+
+(eqset? (list `here `are `words)
+        (list `here `words `are)) ;Value: #t
+
+(eqset? (list `here `are `some `words)
+        (list `here `are `words)) ;Value: #f
