@@ -669,3 +669,20 @@
 (union (list `stewed `tomatoes `and `macaroni `casserole)
        (list `macaroni `and `cheese))
 ;Value: (stewed tomatoes casserole macaroni and cheese)
+
+; write the function `intersectall`. It takes an `l-set`, which is a non-empty list of lists. It returns a list of members that are shared amongst each of the sublists of `l-set`
+(define intersectall
+  (lambda (l-set)
+    (cond
+      ((null? (cdr l-set)) (car l-set))
+      (else (intersect (car l-set)
+                       (intersectall (cdr l-set)))))))
+
+(intersectall (list (list `a `b `c)
+                    (list `c `a `d `e)
+                    (list `e `f `g `h `a `b)))
+
+(intersectall (list (list 6 `pears `and)
+                    (list 3 `peaches `and 6 `peppers)
+                    (list 8 `pears `and 6 `plums)
+                    (list `and 6 `prunes `with `some `apples)))
