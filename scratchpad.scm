@@ -686,3 +686,20 @@
                     (list 3 `peaches `and 6 `peppers)
                     (list 8 `pears `and 6 `plums)
                     (list `and 6 `prunes `with `some `apples)))
+
+; write the funtion `a-pair?` which returns true if its argument `x` is a list containing two S-expressions
+(define a-pair?
+  (lambda (x)
+    (cond
+      ((atom? x) #f)
+      ((null? x) #f)
+      ((null? (cdr x)) #f)
+      ((null? (cdr (cdr x))) #t)
+      (else #f))))
+
+(a-pair? 5)
+(a-pair? (list))
+(a-pair? (list 5))
+(a-pair? (list 5 7))
+(a-pair? (list (list 5 7) (list 5 7)))
+(a-pair? (list 5 7 3))
