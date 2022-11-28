@@ -703,3 +703,34 @@
 (a-pair? (list 5 7))
 (a-pair? (list (list 5 7) (list 5 7)))
 (a-pair? (list 5 7 3))
+
+(define first
+  (lambda (l)
+    (car l)))
+
+(define second
+  (lambda (l)
+    (car (cdr l))))
+
+(define build
+  (lambda (s1 s2)
+    (cons s1
+      (cons s2 (quote ())))))
+
+(define revpair
+  (lambda (pair)
+    (build (second pair) (first pair))))
+
+(revpair (list 1 2))
+
+; write the function `revrel` that, given a rel (set of pairs) returns a rel with each of the pairs reversed
+(define revrel
+  (lambda (rel)
+    (cond
+      ((null? rel) (quote ()))
+      ((cons (revpair (car rel))
+             (revrel (cdr rel)))))))
+
+(revrel (list (list 1 2)
+              (list 3 4)
+              (list 5 6)))
